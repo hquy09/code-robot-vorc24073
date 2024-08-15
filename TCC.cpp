@@ -179,9 +179,9 @@ digitalWrite(motorPins[3][1], LOW);
     Servo1.write(servo1 ? 90 : 0); 
     Servo2.write(servo2 ? 90 : 0);
   }  else 
-        If (ps2x.Button(PSB_PAD_DOWN)){ // Nếu nút mũi tên xuống dưới (Pad Down)
+        if (ps2x.Button(PSB_PAD_DOWN)){ // Nếu nút mũi tên xuống dưới (Pad Down)
           Servo1.write(0);
-             Servo2.write(0);
+          Servo2.write(0);
 }
 if (ps2x.ButtonPressed(PSB_CROSS)) {  //sử dụng cho việc thả bóng nhà máy xử lý
         // Thiết lập tốc độ cho động cơ số 4 với 10-15%
