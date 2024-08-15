@@ -2,8 +2,10 @@
 #include <PS2X_lib.h> // Thư viện PS2X
 #include <Wire.h> // Thư viện I2C
 #include <Adafruit_PWMServoDriver.h> // Thư viện điều khiển động cơ
+#include <NewPing.h>
+#include <cmath> 
 PS2X ps2x; // Tạo đối tượng PS2X
-
+NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE); // khỏi tạo cảm biến siêu âm HC-SR04
 // Khai báo các chân kết nối PS2
 #define PS2_DAT 12  // Chân DATA
 #define PS2_CMD 11  // Chân COMMAND
