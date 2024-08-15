@@ -3,7 +3,6 @@
 #include <Wire.h> // Thư viện I2C
 #include <Adafruit_PWMServoDriver.h> // Thư viện điều khiển động cơ
 PS2X ps2x; // Tạo đối tượng PS2X
-
 // Khai báo các chân kết nối PS2
 #define PS2_DAT 12  // Chân DATA
 #define PS2_CMD 11  // Chân COMMAND
@@ -29,16 +28,16 @@ int motorChannel1 = 0; // Điều khiển chiều quay
 int motorChannel2 = 1; // Điều khiển tốc độ
 
 // Khai báo các biến trạng thái
-Int analogTrai, analogPhai;
-Int nutAn;
-Int triggerL2;
+int analogTrai, analogPhai;
+int nutAn;
+int triggerL2;
 
 Servo servo1; // servo1
 Servo servo2; // servo2
 
-Void setup() {
+void setup() {
   // Khởi tạo PS2 controller
-  Int error = ps2x.config_gamepad(PS2_CLK, PS2_CMD, PS2_SEL, PS2_DAT, true, true); // Khởi tạo PS2 controller
+  int error = ps2x.config_gamepad(PS2_CLK, PS2_CMD, PS2_SEL, PS2_DAT, true, true); // Khởi tạo PS2 controller
   If (error == 0) { // Kiểm tra xem PS2 controller có kết nối được không
     Serial.println(“PS2 True!”);
   } else {
@@ -56,7 +55,7 @@ Void setup() {
   Servo2.attach(SERVO_2_PIN); // Khởi tạo servo 2
 
   // Khởi tạo các chân điều khiển động cơ
-  For (int i = 0; i < NUM_MOTORS; i++) { // Lặp qua từng động cơ
+  for (int i = 0; i < NUM_MOTORS; i++) { // Lặp qua từng động cơ
     pinMode(motorPins[i][0], OUTPUT);    // Chân điều khiển động cơ 1
     pinMode(motorPins[i][1], OUTPUT);    // Chân điều khiển động cơ 2
   }
@@ -65,8 +64,8 @@ Void setup() {
   Serial.begin(12600); 
 }
 
-Void controlMotors(int analogValue, int motorIndex1, int motorIndex2) { // Hàm điều khiển động cơ
-  If (analogValue > 128) { // Đi tiến
+void controlMotors(int analogValue, int motorIndex1, int motorIndex2) { // Hàm điều khiển động cơ
+  if (analogValue > 128) { // Đi tiến
     // Rẽ phải
     digitalWrite(motorPins[motorIndex1][0], HIGH); 
     digitalWrite(motorPins[motorIndex1][1], LOW); 
@@ -154,7 +153,7 @@ int motor4Speed = 2765; // Giả sử tốc độ hiện tại của motor 4 là
   // Giảm tốc động cơ về 0
   changeMotorSpeedGradually(4095, 0);
   delay(1000); // Dừng trong 1 giây
-  If (ps2x.Button(PSB_TRIANGLE)){ // Điều khiển motor 3 (quay chổi quét)
+  if (ps2x.Button(PSB_TRIANGLE)){ // Điều khiển motor 3 (quay chổi quét)
     digitalWrite(motorPins[2][0], HIGH); 
     digitalWrite(motorPins[2][1], LOW);
   } else 
@@ -173,7 +172,7 @@ digitalWrite(motorPins[3][0], motorState);
 digitalWrite(motorPins[3][1], LOW); 
     
   // Điều khiển servo khi nút bấm được nhấn
-  If (ps2x.Button(PSB_PAD_UP)) { // Nếu nút mũi tên lên trên (Pad Up)
+  if (ps2x.Button(PSB_PAD_UP)) { // Nếu nút mũi tên lên trên (Pad Up)
     Servo1.write(servo1 ? 90 : 0); 
     Servo2.write(servo2 ? 90 : 0);
   }  else 
@@ -181,7 +180,7 @@ digitalWrite(motorPins[3][1], LOW);
           Servo1.write(0);
              Servo2.write(0);
 }
-  Delay(100); // độ trễ để làm mượt hoạt động
+  delay(100); // độ trễ để làm mượt hoạt động
 }
 
 
