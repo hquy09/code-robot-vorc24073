@@ -3,6 +3,7 @@
 #include <Wire.h> // Thư viện I2C
 #include <Adafruit_PWMServoDriver.h> // Thư viện điều khiển động cơ
 PS2X ps2x; // Tạo đối tượng PS2X
+
 // Khai báo các chân kết nối PS2
 #define PS2_DAT 12  // Chân DATA
 #define PS2_CMD 11  // Chân COMMAND
@@ -13,7 +14,7 @@ PS2X ps2x; // Tạo đối tượng PS2X
 #define SERVO_1_PIN 2 // Chân điều khiển servo 1
 #define SERVO_2_PIN 7 // Chân điều khiển servo 2
 
-#define NUM_MOTORS 4 // Số lượng động cơ
+#define NUM_MOTORS 4 // Số lượng động cơ điều khiển
 Const int motorPins[NUM_MOTORS][2] = { // Mảng chứa các chân điều khiển động cơ
   {8, 9},    // Motor 1
   {10, 11},  // Motor 2
