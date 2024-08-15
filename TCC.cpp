@@ -32,15 +32,15 @@ int motorChannel2 = 1; // Điều khiển tốc độ
 int analogTrai, analogPhai;
 int nutAn;
 int triggerL2;
-
+// Khởi tạo servo 1 và 2
 Servo servo1; // servo1
 Servo servo2; // servo2
 
 void setup() {
   // Khởi tạo PS2 controller
   int error = ps2x.config_gamepad(PS2_CLK, PS2_CMD, PS2_SEL, PS2_DAT, true, true); // Khởi tạo PS2 controller
-  If (error == 0) { // Kiểm tra xem PS2 controller có kết nối được không
-    Serial.println(“PS2 True!”);
+  if (error == 0) { // Kiểm tra xem PS2 controller có kết nối được không
+    Serial.println(“PS2 True!”); //ps2 đã được kết nối
   } else {
     Serial.println(“PS2 False!”);
   }
@@ -110,7 +110,7 @@ void loop() {
 
   // Đọc tín hiệu từ gamepad PS2
   analogTrai = ps2x.Analog(PSS_LX); // Lấy giá trị của cần analog trái (trục X)
-  analogPhai = ps2x.Analog(PSS_RX); // Lấy giá trị của cần analog phải (trục X)
+  analogPhai = ps2x.Analog(PSS_RY); // Lấy giá trị của cần analog phải (trục Y)
   nutAn = ps2x.Button(PSB_CROSS);   // Đọc tín hiệu từ nút X (Cross)
   triggerL2 = ps2x.Button(PSB_L2);  // Đọc tín hiệu từ Trigger L2
   PSB_PAD_UP = ps2x.Button(PSB_PAD_UP); // Đọc tín hiệu từ nút nhấn trên (Pad Up)
