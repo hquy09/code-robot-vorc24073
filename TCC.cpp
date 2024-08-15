@@ -109,7 +109,7 @@ void changeMotorSpeedGradually(int startSpeed, int endSpeed) { // Hàm thay đ�
 }
 void loop() {
   Ps2x.read_gamepad(false, 0); // Đọc dữ liệu từ gamepad PS2
-
+  unsigned int distance = sonar.ping_cm();
   // Đọc tín hiệu từ gamepad PS2
   analogTrai = ps2x.Analog(PSS_LX); // Lấy giá trị của cần analog trái (trục X)
   analogPhai = ps2x.Analog(PSS_RY); // Lấy giá trị của cần analog phải (trục Y)
@@ -183,6 +183,15 @@ digitalWrite(motorPins[3][1], LOW);
           Servo1.write(0);
              Servo2.write(0);
 }
+if (ps2x.ButtonPressed(PSB_CROSS)) {  //sử dụng cho việc thả bóng nhà máy xử lý
+        // Thiết lập tốc độ cho động cơ số 4 với 10-15%
+        int minSpeed = 409; // 10% của 4095
+        // Chọn ngẫu nhiên một giá trị giữa 10-15%
+        int motorSpeed = random(minSpeed, maxSpeed + 1);
+        
+        // Thiết lập tốc độ cho động cơ số 4
+        pca9685.setPWM(motorChannel2, 0, motorSpeed);
+    }
   delay(100); // độ trễ để làm mượt hoạt động
 }
 
