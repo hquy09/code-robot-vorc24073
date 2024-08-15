@@ -17,7 +17,7 @@ NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE); // khỏi tạo cảm biến si
 #define SERVO_2_PIN 7 // Chân điều khiển servo 2
 
 #define NUM_MOTORS 4 // Số lượng động cơ điều khiển
-Const int motorPins[NUM_MOTORS][2] = { // Mảng chứa các chân điều khiển động cơ
+const int motorPins[NUM_MOTORS][2] = { // Mảng chứa các chân điều khiển động cơ
   {8, 9},    // Motor 1
   {10, 11},  // Motor 2
   {12, 13},  // Motor 3
@@ -62,8 +62,8 @@ void setup() {
   pca9685.setPWMFreq(50);
 
   // Khởi tạo các servo
-  Servo1.attach(SERVO_1_PIN); // Khởi tạo servo 1
-  Servo2.attach(SERVO_2_PIN); // Khởi tạo servo 2
+  servo1.attach(SERVO_1_PIN); // Khởi tạo servo 1
+  servo2.attach(SERVO_2_PIN); // Khởi tạo servo 2
 
   // Khởi tạo các chân điều khiển động cơ
   for (int i = 0; i < NUM_MOTORS; i++) { // Lặp qua từng động cơ
@@ -114,7 +114,7 @@ void changeMotorSpeedGradually(int startSpeed, int endSpeed) { // Hàm thay đ�
   }
 }
 void loop() {
-  Ps2x.read_gamepad(false, 0); // Đọc dữ liệu từ gamepad PS2
+  ps2x.read_gamepad(false, 0); // Đọc dữ liệu từ gamepad PS2
   unsigned int distance = sonar.ping_cm();
   // Đọc tín hiệu từ gamepad PS2
   analogTrai = ps2x.Analog(PSS_LX); // Lấy giá trị của cần analog trái (trục X)
