@@ -41,6 +41,7 @@ int calculateServoAngle(int x) {
 int analogTrai, analogPhai;
 int nutAn;
 int triggerL2;
+int gocban;
 // Khởi tạo servo 1 và 2
 Servo servo1; // servo1
 Servo servo2; // servo2
@@ -184,12 +185,32 @@ if (ps2x.ButtonPressed(PSB_CROSS)) {  //sử dụng cho việc thả bóng nhà 
         int minSpeed = 409; // 10% của 4095
         // Chọn ngẫu nhiên một giá trị giữa 10-15%
         int motorSpeed = random(minSpeed, maxSpeed + 1);
-        
+        servo1.write(0); // set góc của 2 servo bằng 0
+        servo2.write(0);
         // Thiết lập tốc độ cho động cơ số 4
         pca9685.setPWM(motorChannel2, 0, motorSpeed);
     }
-  delay(100); // độ trễ để làm mượt hoạt động
-  
+if (distance > 100) { //kiểm tra trong khoảng cách ném được bóng trắng thì khởi tạo chương trình bắn
+  gocban = calculateServoAngle(distange); // tính toán góc bắn
+  gocban = map(gocban, 18, 71, 5, 35); // điều chỉnh lại dử liệu đầu vào cho phù hợp
 }
-
-
+// Kiểm tra tín hiệu từ trigger L2
+    triggerL2 = ps2x.Analog(PSAB_L2); // Đọc tín hiệu từ L2 (giá trị từ 0-255)
+    
+    if (triggerL2 > 128) {  // Nếu tín hiệu từ L2 cao hơn 50% 
+        // Điều chỉnh tốc độ động cơ 4 lên 80%
+        int motorSpeed = 3276;  // 80% của 4095
+        pca9685.setPWM(motorChannel2, 0, motorSpeed);
+        
+        // Thiết lập góc bắn cho servo hoạt động đồng bộ
+        servo1.write(gocban);
+        servo2.write(gocban);
+        
+        // Kiểm tra lần nữa nếu L2 được nhấn lần nữa để tắt động cơ và dừng bắn bóng
+        if (ps2x.Analog(PSAB_L2) > 128) {
+            // Tắt động cơ
+            pca9685.setPWM(motorChannel2, 0, 0);  // Dừng động cơ số 4
+        }
+    }
+  delay(100); // độ trễ để làm mượt hoạt động
+}
