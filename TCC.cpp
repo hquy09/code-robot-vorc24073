@@ -29,7 +29,14 @@ Adafruit_PWMServoDriver pca9685 = Adafruit_PWMServoDriver();
 // Các kênh trên PCA9685 để điều khiển động cơ
 int motorChannel1 = 0; // Điều khiển chiều quay
 int motorChannel2 = 1; // Điều khiển tốc độ
-
+// hàm tính toán góc bắn
+int calculateServoAngle(int x) {
+  // Thay thế công thức này với công thức bạn đã tính toán
+  float theta = 0;
+  theta = atan(150/(49+x)) * (180/3.14159);
+    // Đổi từ radian sang độ
+  return (int)theta;  // Chuyển đổi thành giá trị góc integer
+}
 // Khai báo các biến trạng thái
 int analogTrai, analogPhai;
 int nutAn;
@@ -63,8 +70,6 @@ void setup() {
     pinMode(motorPins[i][1], OUTPUT);    // Chân điều khiển động cơ 2
   }
 
-  // Khởi tạo giao tiếp Serial
-  Serial.begin(12600); 
 }
 
 void controlMotors(int analogValue, int motorIndex1, int motorIndex2) { // Hàm điều khiển động cơ
@@ -173,16 +178,7 @@ bool motorState = (triggerL2 == true) ? HIGH : LOW; // Nếu triggerL2 được 
 // Cài đặt chân điều khiển động cơ dựa trên trạng thái triggerL2
 digitalWrite(motorPins[3][0], motorState); 
 digitalWrite(motorPins[3][1], LOW); 
-    
-  // Điều khiển servo khi nút bấm được nhấn
-  if (ps2x.Button(PSB_PAD_UP)) { // Nếu nút mũi tên lên trên (Pad Up)
-    Servo1.write(servo1 ? 90 : 0); 
-    Servo2.write(servo2 ? 90 : 0);
-  }  else 
-        if (ps2x.Button(PSB_PAD_DOWN)){ // Nếu nút mũi tên xuống dưới (Pad Down)
-          Servo1.write(0);
-          Servo2.write(0);
-}
+  
 if (ps2x.ButtonPressed(PSB_CROSS)) {  //sử dụng cho việc thả bóng nhà máy xử lý
         // Thiết lập tốc độ cho động cơ số 4 với 10-15%
         int minSpeed = 409; // 10% của 4095
@@ -193,6 +189,7 @@ if (ps2x.ButtonPressed(PSB_CROSS)) {  //sử dụng cho việc thả bóng nhà 
         pca9685.setPWM(motorChannel2, 0, motorSpeed);
     }
   delay(100); // độ trễ để làm mượt hoạt động
+  
 }
 
 
